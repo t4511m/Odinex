@@ -5,6 +5,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const keys = require("./config/keys");
 
@@ -20,6 +21,7 @@ app.use(
     secret: keys.cookieKey,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: keys.mongoURI }),
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       secure: false, // true if HTTPS in production
